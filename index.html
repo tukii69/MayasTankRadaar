@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#04080c" />
+  <title>Maya’sTankRadar</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="icon" href="icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <link rel="stylesheet" href="style.css?v=7" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="brand-header">
+      <div class="brand-hero">
+        <img src="brand-banner.png" alt="Maya’sTankRadar" />
+      </div>
+      <button id="keyBtn" class="key-btn" type="button" aria-label="API-Key eintragen">Key</button>
+    </header>
+
+    <section class="control-card" aria-label="Sucheinstellungen">
+      <div class="chip-group">
+        <div class="chip-title">Spritart</div>
+        <div class="chips chips-3" id="fuelChips">
+          <button class="chip active" type="button" data-fuel="diesel">Diesel</button>
+          <button class="chip" type="button" data-fuel="e10">E10</button>
+          <button class="chip" type="button" data-fuel="e5">E5</button>
+        </div>
+      </div>
+
+      <div class="chip-group">
+        <div class="chip-title">Umkreis</div>
+        <div class="chips chips-5" id="radiusChips">
+          <button class="chip" type="button" data-radius="1">1 km</button>
+          <button class="chip" type="button" data-radius="2">2 km</button>
+          <button class="chip active" type="button" data-radius="5">5 km</button>
+          <button class="chip" type="button" data-radius="10">10 km</button>
+          <button class="chip" type="button" data-radius="25">25 km</button>
+        </div>
+      </div>
+
+      <div class="action-grid">
+        <button id="searchBtn" class="primary-btn" type="button">Preise suchen</button>
+        <button id="princessBtn" class="princess-btn" type="button">PrinzessinPreis</button>
+      </div>
+
+      <div class="mini-actions">
+        <label class="switch-line">
+          <input type="checkbox" id="openOnly" />
+          <span>Nur geöffnet</span>
+        </label>
+        <button id="mapOpenBtn" class="mini-btn" type="button">Karte</button>
+      </div>
+
+      <p id="statusText" class="status-line">Key eintragen, dann Preise suchen.</p>
+    </section>
+
+    <section class="results-section" aria-label="Tankstellen und Preise">
+      <div class="section-head">
+        <div>
+          <h2>Tankstellen</h2>
+          <span id="fuelLabel">Diesel</span>
+        </div>
+        <div class="stats-pill">
+          <strong id="bestPrice">—</strong>
+          <span id="stationCount">0</span>
+        </div>
+      </div>
+
+      <div id="results" class="station-grid" aria-live="polite">
+        <div class="empty-state"><p>Noch keine echten Preise geladen.</p></div>
+      </div>
+    </section>
+
+    <section id="mapSection" class="map-section hidden" aria-label="Kartenansicht">
+      <div class="section-head map-head">
+        <div>
+          <h2>Karte</h2>
+          <span>Marker antippen</span>
+        </div>
+        <button id="mapCloseBtn" class="mini-btn" type="button">Schließen</button>
+      </div>
+      <div class="map-card"><div id="map"></div></div>
+    </section>
+
+    <section class="bottom-info">
+      <div><span>Update</span><strong id="lastUpdated">—</strong></div>
+      <div><span>Position</span><strong id="positionInfo">—</strong></div>
+    </section>
+  </main>
+
+  <dialog id="keyDialog">
+    <form method="dialog" class="dialog-card">
+      <h3>Tankerkönig API-Key</h3>
+      <p>Der Key wird nur auf deinem Gerät gespeichert. Nicht in GitHub eintragen.</p>
+      <input id="apiKeyInput" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" autocomplete="off" />
+      <div class="dialog-actions">
+        <button id="clearKeyBtn" class="ghost-btn danger" type="button">Löschen</button>
+        <button class="secondary-btn" value="cancel">Abbrechen</button>
+        <button id="saveKeyBtn" class="primary-btn" value="default">Speichern</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="stationDialog">
+    <div class="dialog-card station-dialog-card">
+      <div class="dialog-topline">
+        <span>Tankstellen-Details</span>
+        <button id="closeStationDialog" class="ghost-btn small-btn" type="button">Schließen</button>
+      </div>
+      <div id="stationDetails"></div>
+    </div>
+  </dialog>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="script.js?v=7"></script>
+</body>
+</html>
